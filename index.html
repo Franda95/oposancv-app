@@ -5,7 +5,7 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="OpoSanCV · Preparación de oposiciones sanitarias de la Comunitat Valenciana.">
+  <meta name="description" content="OpoSanCV · Preparación de oposiciones sanitarias de la Comunitat Valenciana y Comunidad de Madrid.">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="OpoSanCV">
@@ -44,6 +44,20 @@
   </script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2X25XMDGD5"></script>
 
+  <!-- Meta Pixel: OpoSanCV Web -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.getElementsByTagName(e)[0];s=b.createElement(e);s.async=!0;
+    s.src=v;t.parentNode.insertBefore(s,t)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1547223667072107');
+    fbq('track', 'PageView');
+  </script>
+  <!-- End Meta Pixel -->
+
   <!-- Track a registration only after Supabase confirms a successful sign-up. -->
   <script>
     (function() {
@@ -75,6 +89,13 @@
             if (typeof window.gtag === 'function') {
               window.gtag('event', 'sign_up', eventParams);
             }
+
+            if (typeof window.fbq === 'function') {
+              window.fbq('track', 'CompleteRegistration', {
+                content_name: eventParams.content || 'web_signup',
+                campaign: eventParams.campaign || undefined
+              });
+            }
           }
         } catch (_) {}
 
@@ -82,20 +103,6 @@
       };
     })();
   </script>
-
-  <!-- Meta Pixel: OpoSanCV Web -->
-  <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.getElementsByTagName(e)[0];s=b.createElement(e);s.async=!0;
-    s.src=v;t.parentNode.insertBefore(s,t)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1547223667072107');
-    fbq('track', 'PageView');
-  </script>
-  <!-- End Meta Pixel -->
 </head>
 <body>
   <script src="flutter_bootstrap.js" async></script>
