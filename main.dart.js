@@ -102274,9 +102274,9 @@ $S:6}
 A.adm.prototype={}
 A.po.prototype={
 gJz(){switch(this.c){case"MAD":return"Comunidad de Madrid"
-case"CV":default:return"Comunitat Valenciana"}},
+case"IB":return"Illes Balears"\ncase"CV":default:return"Comunitat Valenciana"}},
 goc(){switch(this.d){case"SERMAS":return"SERMAS"
-case"GVA":default:return"GVA"}}}
+case"IBSALUT":return"IB-SALUT"\ncase"GVA":default:return"GVA"}}}
 A.f8.prototype={}
 A.l6.prototype={
 d2(){return A.R(["hours",this.a,"gender_equality",this.b],t.N,t.z)}}
@@ -102543,7 +102543,7 @@ q=A.b([A.R(["code","LAB_GVA","category_code","LAB","region_code","CV","service_c
 s=1
 break}j=t.N
 g=t.z
-q=A.b([A.R(["code","IMG_GVA","category_code","IMG","region_code","CV","service_code","GVA","name","T\xe9cnico Superior en Imagen para el Diagn\xf3stico y Medicina Nuclear \xb7 Comunitat Valenciana","short_name","Imagen \xb7 GVA","is_active",!0,"sort_order",10],j,g),A.R(["code","IMG_SERMAS","category_code","IMG","region_code","MAD","service_code","SERMAS","name","T\xe9cnico Superior en Imagen para el Diagn\xf3stico y Medicina Nuclear \xb7 Comunidad de Madrid","short_name","Imagen \xb7 SERMAS","is_active",!1,"sort_order",20,"official_topic_count",40,"convocation_year",2026,"vacancies_total",294,"convocation_status","in_progress"],j,g)],t.H7)
+q=A.b([A.R(["code","IMG_GVA","category_code","IMG","region_code","CV","service_code","GVA","name","T\xe9cnico Superior en Imagen para el Diagn\xf3stico y Medicina Nuclear \xb7 Comunitat Valenciana","short_name","Imagen \xb7 GVA","is_active",!0,"sort_order",10],j,g),A.R(["code","IMG_SERMAS","category_code","IMG","region_code","MAD","service_code","SERMAS","name","T\xe9cnico Superior en Imagen para el Diagn\xf3stico y Medicina Nuclear \xb7 Comunidad de Madrid","short_name","Imagen \xb7 SERMAS","is_active",!1,"sort_order",20,"official_topic_count",40,"convocation_year",2026,"vacancies_total",294,"convocation_status","in_progress"],j,g),A.R(["code","IMG_IBSALUT","category_code","IMG","region_code","IB","service_code","IBSALUT","name","T\xe9cnico/a superior especialista en radiodiagn\xf3stico \xb7 Illes Balears","short_name","Radiodiagn\xf3stico \xb7 IB-SALUT","is_active",!0,"sort_order",50,"official_topic_count",40,"convocation_year",2025,"vacancies_total",47,"convocation_status","in_progress"],j,g)],t.H7)
 s=1
 break
 case 1:return A.k(q,r)
@@ -108299,7 +108299,7 @@ r=n}return A.bM(A.eR(!1,B.I,!0,l,A.fS(!1,p,!0,A.Sw(r,l,new A.a6(B.re,l,l,o,l,l,B
 X7(){var s,r,q,p,o,n=this,m="convocation",l=null,k=t.f,j=t.N,i=t.z,h=k.b(n.z.h(0,m))?A.ap(k.a(n.z.h(0,m)),j,i):A.v(j,i),g=n.z.h(0,"officialTopicCount")
 if(g==null)g=n.z.h(0,"official_topic_count")
 if(n.y.d==="GVA")s="Preparaci\xf3n y progreso de la Comunitat Valenciana"
-else s=A.p(g==null?40:g)+" temas oficiales \xb7 progreso independiente de GVA"
+else s=n.y.d==="IBSALUT"?A.p(g==null?40:g)+" temas oficiales \xb7 preparaci\xf3n espec\xedfica IB-SALUT":A.p(g==null?40:g)+" temas oficiales \xb7 progreso independiente de GVA"
 if(h.a!==0){k=h.h(0,"vacanciesTotal")
 k=A.p(k==null?"\u2014":k)
 j=h.h(0,"year")
@@ -108488,12 +108488,12 @@ p.push(new A.io(B.hR,q,"Realiza un examen con preguntas aleatorias",!r?new A.aDV
 p.push(B.Q)
 r=k.cx
 q=r?"Simulacro semanal":"Simulacro semanal \xb7 \ud83d\udd12 Premium"
-o=k.y.d==="GVA"?"60 preguntas, ranking y puntuaci\xf3n examen + baremo sobre 250":"90 + 10 reserva \xb7 100 min \xb7 oposici\xf3n 50 + baremo 50"
+o=k.y.d==="GVA"?"60 preguntas, ranking y puntuaci\xf3n examen + baremo sobre 250":k.y.d==="IBSALUT"?"100 + 10 reserva \xb7 150 min \xb7 oposici\xf3n 60 + baremo 40":"90 + 10 reserva \xb7 100 min \xb7 oposici\xf3n 50 + baremo 50"
 p.push(new A.io(B.o4,q,o,!r?new A.aDX(k):new A.aDY(k,a),j))
 p.push(B.Q)
 q=k.y
 o=q.goc()
-r=q.d==="GVA"?"M\xe9ritos de la Comunitat Valenciana \xb7 m\xe1ximo 100 puntos":"Concurso SERMAS \xb7 m\xe1ximo 50 puntos"
+r=q.d==="GVA"?"M\xe9ritos de la Comunitat Valenciana \xb7 m\xe1ximo 100 puntos":q.d==="IBSALUT"?"Concurso IB-SALUT \xb7 m\xe1ximo 40 puntos":"Concurso SERMAS \xb7 m\xe1ximo 50 puntos"
 p.push(new A.io(B.ud,"Mi baremo \xb7 "+o,r,k.gauR(),j))
 p.push(B.Q)
 r=k.cx
