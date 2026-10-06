@@ -102274,9 +102274,13 @@ $S:6}
 A.adm.prototype={}
 A.po.prototype={
 gJz(){switch(this.c){case"MAD":return"Comunidad de Madrid"
-case"IB":return"Illes Balears"\ncase"CV":default:return"Comunitat Valenciana"}},
+case"IB":return"Illes Balears"
+case"CV":return"Comunitat Valenciana"
+default:return this.c.length===0?"Comunidad":this.c}},
 goc(){switch(this.d){case"SERMAS":return"SERMAS"
-case"IBSALUT":return"IB-SALUT"\ncase"GVA":default:return"GVA"}}}
+case"IBSALUT":return"IB-SALUT"
+case"GVA":return"GVA"
+default:return this.d.length===0?"Servicio de salud":this.d}}}
 A.f8.prototype={}
 A.l6.prototype={
 d2(){return A.R(["hours",this.a,"gender_equality",this.b],t.N,t.z)}}
@@ -108299,7 +108303,7 @@ r=n}return A.bM(A.eR(!1,B.I,!0,l,A.fS(!1,p,!0,A.Sw(r,l,new A.a6(B.re,l,l,o,l,l,B
 X7(){var s,r,q,p,o,n=this,m="convocation",l=null,k=t.f,j=t.N,i=t.z,h=k.b(n.z.h(0,m))?A.ap(k.a(n.z.h(0,m)),j,i):A.v(j,i),g=n.z.h(0,"officialTopicCount")
 if(g==null)g=n.z.h(0,"official_topic_count")
 if(n.y.d==="GVA")s="Preparaci\xf3n y progreso de la Comunitat Valenciana"
-else s=n.y.d==="IBSALUT"?A.p(g==null?40:g)+" temas oficiales \xb7 preparaci\xf3n espec\xedfica IB-SALUT":A.p(g==null?40:g)+" temas oficiales \xb7 progreso independiente de GVA"
+else s=A.p(g==null?40:g)+" temas oficiales \xb7 preparaci\xf3n espec\xedfica de "+n.y.gJz()
 if(h.a!==0){k=h.h(0,"vacanciesTotal")
 k=A.p(k==null?"\u2014":k)
 j=h.h(0,"year")
@@ -108958,7 +108962,7 @@ break}A.ac(n,!1).b1(o)
 case 1:return A.k(q,r)}})
 return A.l($async$FI,r)},
 gajz(){if(B.c.aO(this.a.c).toUpperCase()==="LAB")return"T\xe9cnico/a Especialista de Laboratorio"
-return"T\xe9cnico/a Superior en Imagen para el Diagn\xf3stico y Medicina Nuclear"},
+return"Imagen para el Diagn\xf3stico y Radiodiagn\xf3stico"},
 avf(a){switch(a){case"in_progress":return"En tramitaci\xf3n"
 case"applications_open":return"Inscripciones abiertas"
 case"exam_scheduled":return"Examen convocado"
@@ -111956,7 +111960,7 @@ h=n.a.c
 s=A.cD(m,!0,!0,A.t("Premium \xb7 "+h.f,m,m,m,m,m,m))
 if(n.e)h=B.aA
 else{r=A.af(22)
-q=h.b==="LAB"?"Laboratorio":"Imagen"
+q=h.b==="LAB"?"Laboratorio":h.d==="IBSALUT"?"Radiodiagn\xf3stico":"Imagen"
 p=t.p
 r=A.b([A.aj(m,A.an(A.b([B.Qe,B.Q,A.t("Premium "+q+" \xb7 "+h.gJz(),m,m,m,B.lo,m,m),B.e1,A.t(h.goc()+" \xb7 esta suscripci\xf3n solo desbloquea esta oposici\xf3n.",m,m,m,A.ae(m,m,B.a5,m,m,m,m,m,m,m,m,m,m,m,m,m,1.4,!0,m,m,m,m,m,m,m,m),m,m)],p),B.q,B.f,B.i),B.k,m,m,new A.a6(B.dS,m,m,r,m,m,B.p),m,m,m,B.tq,m,m,m),B.a0],p)
 B.b.K(r,new A.a4(B.TG,new A.aGW(),t.vr))
@@ -119915,7 +119919,7 @@ B.a8V=new A.I("No hay preguntas disponibles.",null,null,null,null,null,null,null
 B.r8=new A.fv(B.Z,null,null,B.a8V,null)
 B.dl=new A.x(1,0.5411764705882353,0.596078431372549,0.6666666666666666,B.h)
 B.a6p=new A.u(!0,B.dl,null,null,null,null,12,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.ab_=new A.I("OpoSanCV \xb7 Oposiciones sanitarias de la Comunitat Valenciana",null,B.a6p,B.K,null,null,null,null,null)
+B.ab_=new A.I("OpoSanCV \xb7 Oposiciones sanitarias por servicio de salud",null,B.a6p,B.K,null,null,null,null,null)
 B.K5=new A.fv(B.Z,null,null,B.ab_,null)
 B.aab=new A.I("\xbfHas olvidado tu contrase\xf1a?",null,B.pI,B.K,null,null,null,null,null)
 B.K6=new A.fv(B.Z,null,null,B.aab,null)
@@ -123412,7 +123416,7 @@ B.aaZ=new A.I("Borrar preguntas falladas",null,null,null,null,null,null,null,nul
 B.ab0=new A.I("Para aparecer en el ranking debes tener aceptadas las condiciones de participaci\xf3n. Puedes realizar el reto ahora sin ranking.",null,null,null,null,null,null,null,null)
 B.ab1=new A.I("Mi perfil",null,null,null,null,null,null,null,null)
 B.ab2=new A.I("Nota sobre 10",null,B.pJ,null,null,null,null,null,null)
-B.ab3=new A.I("SUSCRIPCI\xd3N DE MADRID EN PREPARACI\xd3N",null,null,null,null,null,null,null,null)
+B.ab3=new A.I("SUSCRIPCI\xd3N EN PREPARACI\xd3N",null,null,null,null,null,null,null,null)
 B.iT=new A.I("VER PREMIUM",null,null,null,null,null,null,null,null)
 B.ab4=new A.I("HISTORIAL",null,null,null,null,null,null,null,null)
 B.ab5=new A.I("REPASAR TODAS",null,null,null,null,null,null,null,null)
@@ -123462,7 +123466,7 @@ B.abM=new A.I("\xbfQu\xe9 oposici\xf3n est\xe1s preparando?",null,B.a4Z,null,nul
 B.abN=new A.I("No tienes simulacros realizados",null,B.cR,B.K,null,null,null,null,null)
 B.abO=new A.I("El simulacro oficial es Premium.",null,B.c6,B.K,null,null,null,null,null)
 B.abP=new A.I("Cuenta",null,B.cR,null,null,null,null,null,null)
-B.abQ=new A.I("Tu baremo SERMAS",null,B.c5,null,null,null,null,null,null)
+B.abQ=new A.I("Tu baremo",null,B.c5,null,null,null,null,null,null)
 B.KT=new A.x(1,0.8627450980392157,0.9215686274509803,1,B.h)
 B.a4f=new A.u(!0,B.KT,null,null,null,null,15,B.ak,null,null,null,null,1.45,null,null,null,null,null,null,null,null,null,null,null,null,null)
 B.abR=new A.I("Elige tu categor\xeda y entra directamente a tus test, simulacros y progreso.",null,B.a4f,null,null,null,null,null,null)
