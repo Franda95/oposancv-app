@@ -18,7 +18,7 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="OpoSanCV · Preparación de oposiciones sanitarias de la Comunitat Valenciana.">
+  <meta name="description" content="OpoSanCV · Preparación de oposiciones sanitarias por servicio de salud.">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
@@ -31,26 +31,185 @@
 
   <title>OpoSanCV</title>
   <link rel="manifest" href="manifest.json">
-  <!-- Meta Pixel: OpoSanCV Web -->
+
+  <!-- OpoSanCV analytics / conversion tracking
+       Consent is passed from www.oposancv.es as ?oposancv_consent=accepted|rejected
+       and persisted on app.oposancv.es for the email-confirmation return. -->
   <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1547223667072107');
-    fbq('track', 'PageView');
+    (function () {
+      'use strict';
+
+      const GA_MEASUREMENT_ID = 'G-2X25XMDGD5';
+      const META_PIXEL_ID = '1547223667072107';
+      const CONSENT_KEY = 'oposancv_optional_cookies_consent_v2_app';
+
+      function getConsent() {
+        const params = new URLSearchParams(window.location.search);
+        const incoming = params.get('oposancv_consent');
+
+        if (incoming === 'accepted' || incoming === 'rejected') {
+          try {
+            localStorage.setItem(CONSENT_KEY, incoming);
+          } catch (_) {}
+          return incoming;
+        }
+
+        try {
+          return localStorage.getItem(CONSENT_KEY);
+        } catch (_) {
+          return null;
+        }
+      }
+
+      function isSignupConfirmation() {
+        const search = new URLSearchParams(window.location.search);
+        const hashString = window.location.hash.startsWith('#')
+          ? window.location.hash.slice(1)
+          : window.location.hash;
+        const hash = new URLSearchParams(hashString);
+
+        const type = search.get('type') || hash.get('type');
+        const hasAccessToken = Boolean(hash.get('access_token'));
+
+        return type === 'signup' || (hasAccessToken && type !== 'recovery');
+      }
+
+      function signupEventKey() {
+        const raw = window.location.hash || window.location.search || 'signup';
+        let hash = 0;
+        for (let i = 0; i < raw.length; i += 1) {
+          hash = ((hash << 5) - hash) + raw.charCodeAt(i);
+          hash |= 0;
+        }
+        return 'oposancv_signup_tracked_' + Math.abs(hash);
+      }
+
+      function wasSignupTracked() {
+        try {
+          return localStorage.getItem(signupEventKey()) === '1';
+        } catch (_) {
+          return false;
+        }
+      }
+
+      function markSignupTracked() {
+        try {
+          localStorage.setItem(signupEventKey(), '1');
+        } catch (_) {}
+      }
+
+      function loadGoogleAnalytics(onReady) {
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
+
+        window.gtag('js', new Date());
+        window.gtag('config', GA_MEASUREMENT_ID);
+
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://www.googletagmanager.com/gtag/js?id=' +
+          encodeURIComponent(GA_MEASUREMENT_ID);
+        script.onload = function () {
+          if (typeof onReady === 'function') onReady();
+        };
+        document.head.appendChild(script);
+      }
+
+      function loadMetaPixel(onReady) {
+        if (!window.fbq) {
+          const fbq = function() {
+            if (fbq.callMethod) {
+              fbq.callMethod.apply(fbq, arguments);
+            } else {
+              fbq.queue.push(arguments);
+            }
+          };
+
+          window.fbq = fbq;
+          window._fbq = fbq;
+          fbq.push = fbq;
+          fbq.loaded = true;
+          fbq.version = '2.0';
+          fbq.queue = [];
+
+          const script = document.createElement('script');
+          script.async = true;
+          script.src = 'https://connect.facebook.net/en_US/fbevents.js';
+          script.onload = function () {
+            if (typeof onReady === 'function') onReady();
+          };
+          document.head.appendChild(script);
+        }
+
+        window.fbq('consent', 'grant');
+        window.fbq('init', META_PIXEL_ID);
+        window.fbq('track', 'PageView');
+
+        if (window.fbq.loaded && typeof onReady === 'function') {
+          onReady();
+        }
+      }
+
+      const consent = getConsent();
+
+      if (consent === 'accepted') {
+        const signupConfirmation = isSignupConfirmation() && !wasSignupTracked();
+
+        loadGoogleAnalytics(function () {
+          if (signupConfirmation && typeof window.gtag === 'function') {
+            window.gtag('event', 'sign_up', {
+              method: 'email',
+              source: 'oposancv_web'
+            });
+          }
+        });
+
+        loadMetaPixel(function () {
+          if (signupConfirmation && typeof window.fbq === 'function') {
+            window.fbq('track', 'CompleteRegistration', {
+              content_name: 'OpoSanCV',
+              status: 'confirmed'
+            });
+          }
+        });
+
+        if (signupConfirmation) {
+          markSignupTracked();
+        }
+      } else {
+        window['ga-disable-' + GA_MEASUREMENT_ID] = true;
+        if (typeof window.fbq === 'function') {
+          window.fbq('consent', 'revoke');
+        }
+      }
+
+      // Exposed for a future direct call from Flutter after an immediate signup.
+      window.oposancvTrackSignUp = function () {
+        if (getConsent() !== 'accepted') return;
+
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'sign_up', {
+            method: 'email',
+            source: 'oposancv_web'
+          });
+        }
+
+        if (typeof window.fbq === 'function') {
+          window.fbq('track', 'CompleteRegistration', {
+            content_name: 'OpoSanCV',
+            status: 'created'
+          });
+        }
+      };
+    })();
   </script>
-  <!-- End Meta Pixel -->
+  <!-- End OpoSanCV analytics / conversion tracking -->
 </head>
 <body>
   <!--
     You can customize the "flutter_bootstrap.js" script.
     This is useful to provide a custom configuration to the Flutter loader
-    or to give the user feedback during the initialization process.
+    or give the user feedback during the initialization process.
 
     For more details:
     * https://docs.flutter.dev/platform-integration/web/initialization
@@ -58,5 +217,3 @@
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
-
-
