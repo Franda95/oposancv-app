@@ -1,32 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="/">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="OpoSanCV · Preparación de oposiciones sanitarias por servicio de salud.">
 
-  <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="OpoSanCV">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
-
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
   <title>OpoSanCV</title>
@@ -40,8 +24,6 @@
       'use strict';
 
       const GA_MEASUREMENT_ID = 'G-2X25XMDGD5';
-      const GOOGLE_ADS_ID = 'AW-18474432612';
-      const GOOGLE_ADS_SIGNUP_SEND_TO = 'AW-18474432612/0CJMCKX5mIUdEOTwpelE';
       const META_PIXEL_ID = '1547223667072107';
       const CONSENT_KEY = 'oposancv_optional_cookies_consent_v2_app';
 
@@ -72,10 +54,8 @@
 
         const type = search.get('type') || hash.get('type');
         const hasAccessToken = Boolean(hash.get('access_token'));
-        const hasAuthCode = Boolean(search.get('code') || hash.get('code'));
 
-        return type === 'signup' ||
-          ((hasAccessToken || hasAuthCode) && type !== 'recovery');
+        return type === 'signup' || (hasAccessToken && type !== 'recovery');
       }
 
       function signupEventKey() {
@@ -108,7 +88,6 @@
 
         window.gtag('js', new Date());
         window.gtag('config', GA_MEASUREMENT_ID);
-        window.gtag('config', GOOGLE_ADS_ID);
 
         const script = document.createElement('script');
         script.async = true;
@@ -166,11 +145,6 @@
               method: 'email',
               source: 'oposancv_web'
             });
-            window.gtag('event', 'conversion', {
-              send_to: GOOGLE_ADS_SIGNUP_SEND_TO,
-              value: 1.0,
-              currency: 'EUR'
-            });
           }
         });
 
@@ -193,7 +167,6 @@
         }
       }
 
-      // Exposed for a future direct call from Flutter after an immediate signup.
       window.oposancvTrackSignUp = function () {
         if (getConsent() !== 'accepted') return;
 
@@ -201,11 +174,6 @@
           window.gtag('event', 'sign_up', {
             method: 'email',
             source: 'oposancv_web'
-          });
-          window.gtag('event', 'conversion', {
-            send_to: GOOGLE_ADS_SIGNUP_SEND_TO,
-            value: 1.0,
-            currency: 'EUR'
           });
         }
 
@@ -221,14 +189,6 @@
   <!-- End OpoSanCV analytics / conversion tracking -->
 </head>
 <body>
-  <!--
-    You can customize the "flutter_bootstrap.js" script.
-    This is useful to provide a custom configuration to the Flutter loader
-    or give the user feedback during the initialization process.
-
-    For more details:
-    * https://docs.flutter.dev/platform-integration/web/initialization
-  -->
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
